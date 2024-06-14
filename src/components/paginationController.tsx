@@ -5,6 +5,7 @@ import {
   selectMoviesPerPage,
   setCurrentPage,
   setMoviesPerPage,
+  MOVIES_PER_PAGE_OPTIONS,
 } from '@/store/pagination';
 
 export const PaginationController = () => {
@@ -34,7 +35,7 @@ export const PaginationController = () => {
         value={moviesPerPage}
         onChange={(e) => dispatch(setMoviesPerPage(Number(e.target.value)))}
       >
-        {[4, 6, 12].map((option) => (
+        {MOVIES_PER_PAGE_OPTIONS.map((option) => (
           <option key={option} value={option}>
             {option} par page
           </option>

@@ -1,3 +1,7 @@
+import { Movie } from '@/types';
+
+const TIMEOUT_SIMULATION = 1_000;
+
 const movies = [
   {
     id: '1',
@@ -71,6 +75,6 @@ const movies = [
   },
 ];
 
-export const movies$ = new Promise((resolve) =>
-  setTimeout(resolve, 100, movies)
+export const movies$: Promise<Movie[]> = new Promise((resolve) =>
+  setTimeout(resolve, TIMEOUT_SIMULATION, movies)
 );

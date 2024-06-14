@@ -1,6 +1,7 @@
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { moviesSlice } from './movies';
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = typeof store;
@@ -12,7 +13,7 @@ export type AppThunk<ThunkReturnType = void> = ThunkAction<
   Action
 >;
 
-const rootReducer = combineSlices();
+const rootReducer = combineSlices(moviesSlice);
 
 export const makeStore = (preloadState?: Partial<RootState>) => {
   const store = configureStore({

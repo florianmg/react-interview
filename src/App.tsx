@@ -1,6 +1,6 @@
-import { CategoryFilter } from './components/categoryFilter';
-import { ListMovies } from './components/listMovies';
-import { PaginationController } from './components/paginationController';
+import { CategoryFilter } from '@/components/categoryFilter';
+import { ListMovies } from '@/components/listMovies';
+import { PaginationController } from '@/components/paginationController';
 
 function App() {
   return (

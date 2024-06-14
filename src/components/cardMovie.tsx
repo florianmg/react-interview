@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { clsx } from 'clsx';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+
 import { useAppDispatch } from '@/hooks/useStore';
 import { deleteMovie, likeMovie, dislikeMovie } from '@/store/movies';
 
 import { Movie } from '@/types';
-import { ThumbsDown, ThumbsUp } from 'lucide-react';
 
 type CardMovieProps = {
   movie: Movie;

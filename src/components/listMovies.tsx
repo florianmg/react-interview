@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+
 import { useAppDispatch, useAppSelector } from '@/hooks/useStore';
 import {
   getMovies,
@@ -7,7 +8,7 @@ import {
   selectSelectedCategories,
 } from '@/store/movies';
 import { selectCurrentPage, selectMoviesPerPage } from '@/store/pagination';
-import { CardMovie } from './cardMovie';
+import { CardMovie } from '@/components/cardMovie';
 
 export const ListMovies = () => {
   const dispatch = useAppDispatch();

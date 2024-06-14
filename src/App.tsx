@@ -1,7 +1,5 @@
 function App() {
-  return (
-    <div>App.tsx</div>
-  )
+  return <div>App.tsx</div>;
 }
 
-export default App
+export default App;

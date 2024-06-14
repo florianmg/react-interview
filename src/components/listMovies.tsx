@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useStore';
 import {
   getMovies,
@@ -16,9 +16,8 @@ export const ListMovies = () => {
   const selectedCategories = useAppSelector(selectSelectedCategories);
   const currentPage = useAppSelector(selectCurrentPage);
   const moviesPerPage = useAppSelector(selectMoviesPerPage);
-
-  const filteredMovies =
-    selectedCategories.length > 0
+  const filteredMovies = useMemo(() => {
+    return selectedCategories.length > 0
       ? movies
           .filter((movie) => selectedCategories.includes(movie.category))
           .slice((currentPage - 1) * moviesPerPage, currentPage * moviesPerPage)
@@ -26,6 +25,7 @@ export const ListMovies = () => {
           (currentPage - 1) * moviesPerPage,
           currentPage * moviesPerPage
         );
+  }, [movies, selectedCategories, currentPage, moviesPerPage]);
 
   useEffect(() => {
     dispatch(getMovies());

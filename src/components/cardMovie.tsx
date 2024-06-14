@@ -22,7 +22,7 @@ export const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
     dispatch(dislikeMovie(movie.id));
   };
   return (
-    <div className="w-72 h-96 bg-cover bg-center relative rounded-xl overflow-hidden border-2 border-base-content">
+    <div className="w-full h-96 bg-cover bg-center relative rounded-xl overflow-hidden border-2 border-base-content">
       <div
         className="w-full h-full absolute top-0 left-0 z-0 bg-center bg-cover"
         style={{
@@ -39,7 +39,7 @@ export const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
           <button className="btn btn-sm" onClick={onDeleteMovie}>
             Supprimer
           </button>
-          <div className="join join-vertical lg:join-horizontal">
+          <div className="join join-horizontal">
             <button
               className={clsx('btn btn-sm join-item', {
                 'btn-success': movie.userOpinion === 'like',

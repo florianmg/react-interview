@@ -1,18 +1,25 @@
 import React from 'react';
-
+import { clsx } from 'clsx';
 import { useAppDispatch } from '@/hooks/useStore';
-import { deleteMovie } from '@/store/movies';
+import { deleteMovie, likeMovie, dislikeMovie } from '@/store/movies';
 
 import { Movie } from '@/types';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
 
 type CardMovieProps = {
   movie: Movie;
 };
-// Add black semi transparent overlay to the card
+
 export const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
   const dispatch = useAppDispatch();
   const onDeleteMovie = () => {
     dispatch(deleteMovie(movie.id));
+  };
+  const onLikeMovie = () => {
+    dispatch(likeMovie(movie.id));
+  };
+  const onDislikeMovie = () => {
+    dispatch(dislikeMovie(movie.id));
   };
   return (
     <div className="w-72 h-96 bg-cover bg-center relative rounded-xl overflow-hidden border-2 border-base-content">
@@ -32,6 +39,25 @@ export const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
           <button className="btn btn-sm" onClick={onDeleteMovie}>
             Supprimer
           </button>
+          <div className="join join-vertical lg:join-horizontal">
+            <button
+              className={clsx('btn btn-sm join-item', {
+                'btn-success': movie.userOpinion === 'like',
+              })}
+              onClick={onLikeMovie}
+            >
+              {movie.likes}
+              <ThumbsUp size={16} />
+            </button>
+            <button
+              className={clsx('btn btn-sm join-item', {
+                'btn-error': movie.userOpinion === 'dislike',
+              })}
+              onClick={onDislikeMovie}
+            >
+              {movie.dislikes} <ThumbsDown size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

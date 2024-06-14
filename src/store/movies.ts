@@ -7,11 +7,15 @@ import { Movie } from '@/types';
 
 export interface MoviesSliceState {
   movies: Movie[];
+  likedMovies: string[];
+  dislikesMovies: string[];
   status: 'initial' | 'idle' | 'loading' | 'failed';
 }
 
 const initialState: MoviesSliceState = {
   movies: [],
+  likedMovies: [],
+  dislikesMovies: [],
   status: 'initial',
 };
 
@@ -47,24 +51,40 @@ export const moviesSlice = createAppSlice({
       return state;
     }),
     likeMovie: create.reducer((state, action: PayloadAction<string>) => {
-      if (!state.movies) return state;
       state.movies = state.movies.map((movie) => {
         if (movie.id === action.payload) {
-          movie.likes += 1;
+          if (movie.userOpinion === 'like') {
+            movie.likes--;
+            movie.userOpinion = undefined;
+          } else if (movie.userOpinion === 'dislike') {
+            movie.likes++;
+            movie.dislikes--;
+            movie.userOpinion = 'like';
+          } else {
+            movie.likes++;
+            movie.userOpinion = 'like';
+          }
         }
         return movie;
       });
-      return state;
     }),
     dislikeMovie: create.reducer((state, action: PayloadAction<string>) => {
-      if (!state.movies) return state;
       state.movies = state.movies.map((movie) => {
         if (movie.id === action.payload) {
-          movie.dislikes += 1;
+          if (movie.userOpinion === 'dislike') {
+            movie.dislikes--;
+            movie.userOpinion = undefined;
+          } else if (movie.userOpinion === 'like') {
+            movie.dislikes++;
+            movie.likes--;
+            movie.userOpinion = 'dislike';
+          } else {
+            movie.dislikes++;
+            movie.userOpinion = 'dislike';
+          }
         }
         return movie;
       });
-      return state;
     }),
     filterMoviesByCategory: create.reducer(
       (state, action: PayloadAction<string>) => {

@@ -1,5 +1,11 @@
+import { ListMovies } from './components/listMovies';
+
 function App() {
-  return <div>App.tsx</div>;
+  return (
+    <div>
+      <ListMovies />
+    </div>
+  );
 }
 
 export default App;

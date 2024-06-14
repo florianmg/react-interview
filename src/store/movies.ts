@@ -7,15 +7,13 @@ import { Movie } from '@/types';
 
 export interface MoviesSliceState {
   movies: Movie[];
-  likedMovies: string[];
-  dislikesMovies: string[];
+  selectedCategories: string[];
   status: 'initial' | 'idle' | 'loading' | 'failed';
 }
 
 const initialState: MoviesSliceState = {
   movies: [],
-  likedMovies: [],
-  dislikesMovies: [],
+  selectedCategories: [],
   status: 'initial',
 };
 
@@ -86,12 +84,9 @@ export const moviesSlice = createAppSlice({
         return movie;
       });
     }),
-    filterMoviesByCategory: create.reducer(
-      (state, action: PayloadAction<string>) => {
-        if (!state.movies) return state;
-        state.movies = state.movies.filter(
-          (movie) => movie.category === action.payload
-        );
+    updateSelectedCategories: create.reducer(
+      (state, action: PayloadAction<string[]>) => {
+        state.selectedCategories = action.payload;
         return state;
       }
     ),
@@ -99,6 +94,7 @@ export const moviesSlice = createAppSlice({
   selectors: {
     selectMovies: (state) => state.movies,
     selectMoviesStatus: (state) => state.status,
+    selectSelectedCategories: (state) => state.selectedCategories,
     selectCategories: createSelector(
       [(state: MoviesSliceState) => state.movies],
       (movies) => {
@@ -109,7 +105,16 @@ export const moviesSlice = createAppSlice({
   },
 });
 
-export const { getMovies, deleteMovie, dislikeMovie, likeMovie } =
-  moviesSlice.actions;
-export const { selectMovies, selectMoviesStatus, selectCategories } =
-  moviesSlice.selectors;
+export const {
+  getMovies,
+  deleteMovie,
+  dislikeMovie,
+  likeMovie,
+  updateSelectedCategories,
+} = moviesSlice.actions;
+export const {
+  selectMovies,
+  selectMoviesStatus,
+  selectCategories,
+  selectSelectedCategories,
+} = moviesSlice.selectors;

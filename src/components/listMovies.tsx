@@ -1,12 +1,23 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/useStore';
-import { getMovies, selectMovies, selectMoviesStatus } from '@/store/movies';
+import {
+  getMovies,
+  selectMovies,
+  selectMoviesStatus,
+  selectSelectedCategories,
+} from '@/store/movies';
 import { CardMovie } from './cardMovie';
 
 export const ListMovies = () => {
   const dispatch = useAppDispatch();
   const movies = useAppSelector(selectMovies);
   const moviesStatus = useAppSelector(selectMoviesStatus);
+  const selectedCategories = useAppSelector(selectSelectedCategories);
+
+  const filteredMovies =
+    selectedCategories.length > 0
+      ? movies.filter((movie) => selectedCategories.includes(movie.category))
+      : movies;
 
   useEffect(() => {
     dispatch(getMovies());
@@ -17,13 +28,10 @@ export const ListMovies = () => {
   if (moviesStatus === 'failed') return <p>Un erreur est</p>;
   if (movies.length === 0) return <p>Aucun film de trouvé</p>;
   return (
-    <div className="space-y-3">
-      <p className="font-extrabold text-7xl">NOS FILMS</p>
-      <div className="flex flex-wrap gap-6">
-        {movies.map((movie) => (
-          <CardMovie key={movie.id} movie={movie} />
-        ))}
-      </div>
+    <div className="flex flex-wrap gap-6">
+      {filteredMovies.map((movie) => (
+        <CardMovie key={movie.id} movie={movie} />
+      ))}
     </div>
   );
 };

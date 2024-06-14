@@ -6,6 +6,7 @@ import {
   selectMoviesStatus,
   selectSelectedCategories,
 } from '@/store/movies';
+import { selectCurrentPage, selectMoviesPerPage } from '@/store/pagination';
 import { CardMovie } from './cardMovie';
 
 export const ListMovies = () => {
@@ -13,11 +14,18 @@ export const ListMovies = () => {
   const movies = useAppSelector(selectMovies);
   const moviesStatus = useAppSelector(selectMoviesStatus);
   const selectedCategories = useAppSelector(selectSelectedCategories);
+  const currentPage = useAppSelector(selectCurrentPage);
+  const moviesPerPage = useAppSelector(selectMoviesPerPage);
 
   const filteredMovies =
     selectedCategories.length > 0
-      ? movies.filter((movie) => selectedCategories.includes(movie.category))
-      : movies;
+      ? movies
+          .filter((movie) => selectedCategories.includes(movie.category))
+          .slice((currentPage - 1) * moviesPerPage, currentPage * moviesPerPage)
+      : movies.slice(
+          (currentPage - 1) * moviesPerPage,
+          currentPage * moviesPerPage
+        );
 
   useEffect(() => {
     dispatch(getMovies());
